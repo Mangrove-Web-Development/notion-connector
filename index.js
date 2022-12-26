@@ -72,6 +72,9 @@ getDatabase(clientsDatabaseId)
 
 const express = require('express');
 const app = express();
+const cors = require('cors')
+
+app.use(cors())
 
 app.get('/database/:databaseId', (req, res) => {
 	getDatabase(req.params.databaseId).then(response => {
