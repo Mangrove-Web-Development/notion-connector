@@ -1,8 +1,7 @@
 import {notion} from "./client.js";
 import chunkString from "../utils/chunkString.js";
 
-async function addReport(reportId, date, clientId, report, device) {
-	console.log(report.length);
+async function addReport(reportId, date, clientId, report, device, clientName) {
 	const reportChunks = chunkString(report, 1900);
 	// Map through the chunks and create a new block for each chunk
 	const blocks = reportChunks.map(chunk => {
@@ -39,6 +38,15 @@ async function addReport(reportId, date, clientId, report, device) {
               },
             },
           ],
+        },
+				'ClientName': {
+					"rich_text": [
+						{
+							"text": {
+								"content": clientName
+							}
+						}
+					]
         },
 				'Date': {
 					type: 'date',

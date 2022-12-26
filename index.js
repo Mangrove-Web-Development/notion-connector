@@ -21,6 +21,7 @@ getDatabase(clientsDatabaseId)
 		// Map through the clients and get the reports for each client
 		response.map(client => {
 			const clientId = client?.id;
+			const clientName = client?.properties?.Name?.rich_text[0]?.text?.content;
 			const clientSlug = client?.properties?.ID?.title[0]?.plain_text;
 			const clientUrl = client?.properties?.URL?.url;
 
@@ -57,11 +58,11 @@ getDatabase(clientsDatabaseId)
 					const reportId = `${clientSlug}-${formattedDate}`;
 
 					// Add the report to the database
-					addReport(`${reportId}-desktop`, formattedDate, clientId, JSON.stringify(finalReport.desktop), 'desktop').then(response => {
+					addReport(`${reportId}-desktop`, formattedDate, clientId, JSON.stringify(finalReport.desktop), 'desktop', clientName).then(response => {
 						console.log(`${clientId} desktop report added`);
 					});
 
-					addReport(`${reportId}-mobile`, formattedDate, clientId, JSON.stringify(finalReport.mobile), 'mobile').then(response => {
+					addReport(`${reportId}-mobile`, formattedDate, clientId, JSON.stringify(finalReport.mobile), 'mobile', clientName).then(response => {
 						console.log(`${clientId} mobile report added`);
 					});
 				}
