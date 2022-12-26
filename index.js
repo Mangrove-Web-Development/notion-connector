@@ -75,7 +75,7 @@ const app = express();
 
 app.get('/database/:databaseId', (req, res) => {
 	getDatabase(req.params.databaseId).then(response => {
-		console.log(response);
+		res.status(200).json(response);
 	}).catch(error => { return res.send(error) });
 })
 
