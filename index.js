@@ -38,6 +38,7 @@ getDatabase(clientsDatabaseId)
 							id: report?.id,
 							lighthouseResult: {
 								audits: report?.desktop?.lighthouseResult?.audits,
+								score: report?.desktop?.lighthouseResult?.categories?.performance?.score * 100,
 							},
 							loadingExperience: report?.desktop?.loadingExperience,
 						},
@@ -45,6 +46,7 @@ getDatabase(clientsDatabaseId)
 							id: report?.id,
 							lighthouseResult: {
 								audits: report?.mobile?.lighthouseResult?.audits,
+								score: report?.desktop?.lighthouseResult?.categories?.performance?.score * 100,
 							},
 							loadingExperience: report?.mobile?.loadingExperience,
 						}
@@ -58,11 +60,22 @@ getDatabase(clientsDatabaseId)
 					const reportId = `${clientSlug}-${formattedDate}`;
 
 					// Add the report to the database
-					addReport(`${reportId}-desktop`, formattedDate, clientId, JSON.stringify(finalReport.desktop), 'desktop', clientName).then(response => {
+					addReport(
+						`${reportId}-desktop`,
+						formattedDate, clientId,
+						JSON.stringify(finalReport.desktop),
+						'desktop',
+						clientName).then(response => {
 						console.log(`${clientId} desktop report added`);
 					});
 
-					addReport(`${reportId}-mobile`, formattedDate, clientId, JSON.stringify(finalReport.mobile), 'mobile', clientName).then(response => {
+					addReport(
+						`${reportId}-mobile`,
+						formattedDate,
+						clientId,
+						JSON.stringify(finalReport.mobile),
+						'mobile',
+						clientName).then(response => {
 						console.log(`${clientId} mobile report added`);
 					});
 				}
