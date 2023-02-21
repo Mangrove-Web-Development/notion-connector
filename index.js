@@ -1,5 +1,22 @@
 import './start/require.js';
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+
+// Configure mongoose
+mongoose.connect(
+	process.env.MONGODB_URI || "mongodb://127.0.0.1/reports_db",
+	{
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	},
+	(err) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log("Connected to MongoDB");
+		}
+	}
+);
 
 import getDatabase from './api/get.js';
 import getReport from "./api/psi.js";
@@ -30,7 +47,6 @@ getDatabase(clientsDatabaseId)
 					// Iterate through audits and delete if don't have a displayValue
 					report = clearEmptyProperties(report, 'desktop', 'displayValue');
 					report = clearEmptyProperties(report, 'mobile', 'displayValue');
-
 
 					// Get only necessary data from the report
 					const finalReport = {
